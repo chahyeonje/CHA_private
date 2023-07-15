@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<robot name="canineV4">
+  
+  <material name="blue">
+    <color rgba="0.0 0.5 0.8 0.9"/>
+  </material>
+  
+  <material name="black1">
+    <color rgba="0.2 0.2 0.2 1"/>
+  </material>
+  
+  <material name="white">
+    <color rgba="0.9 0.9 0.9 0.5"/>
+  </material>
+
+  <link name="base">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="floating_base" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base"/>
+    <child link="trunk"/>
+  </joint>
+
+  <link name="trunk">
+    <inertial>
+      <origin xyz="0.014339238801855274 0.0005227403404208719 -0.0014269636674238235" rpy="0 0 0"/>
+      <mass value = "7.293"/>
+      <inertia ixx = "0.0414613" ixy = "0" ixz = "0" iyx = "0" iyy = "0.0956574" iyz = "0" izx = "0" izy = "0" izz = "0.121322"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.011" rpy="0 0 0"/>
+      <geometry>
+        <box size= "0.38 0.235 0.131"/>
+      </geometry>
+    </collision>
+  </link>
+  
+<!--Front Left-->
+  <link name="FL_hip">
+    <inertial>
+      <origin xyz="0.058975220413676505 -0.016130924422260128 -9.470708630414767e-05" rpy="0 0 0"/>
+      <mass value = "0.7498"/>
+      <inertia ixx = "0.000564293" iyy = "0.00108156" izz = "0.000706237" ixy = "3.9187e-05" iyz = "2.61247e-06" ixz = "0"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.185613 -0.065216 -0.000494" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/FL_Hip_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black1"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.185613 -0.065216 -0.000494" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/FL_Hip_1.obj" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="FL_thigh">
+    <inertial>
+      <origin xyz="-0.005295476492297502 0.055863741051553104 -0.02739556562567192" rpy="0 0 0"/>
+      <mass value = "1.6223"/>
+      <inertia ixx = "0.00754088" iyy = "0.00733144" izz = "0.00206749" ixy = "0.000208444" iyz = "0.0013115" ixz = "-0.000668218"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.256107 -0.058095 -0.000475" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/FL_thigh_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black1"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0.084 -0.23" rpy="1.57079632679 0 0"/>
+      <geometry>
+        <cylinder length="0.019" radius="0.015"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="FL_calf">
+    <inertial>
+      <origin xyz="0.00031304711228058446 0.018663901688305173 -0.11805864385255102" rpy="0 0 0"/>
+      <mass value = "0.4049"/>
+      <inertia ixx = "0.00415323" iyy = "0.00417183" izz = "7.25698e-05" ixy = "9.30382e-07" iyz = "2.51203e-05" ixz = "-7.44306e-05"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.256221 0.1424 0.230545" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/HR_calf_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.23" rpy="1.57079632679 0 0"/>
+      <geometry>
+        <cylinder length="0.024" radius="0.025"/>
+      </geometry>
+    </collision>
+  </link>
+  
+<!--  joint -->
+  <joint name="FL_HIP" type="revolute">
+    <origin xyz="0.185 0.065 0.0" rpy="0 0 0"/>
+    <parent link="trunk"/>
+    <child link="FL_hip"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  
+  <joint name="FL_THIGH" type="revolute">
+    <origin xyz="0.07 -0.003 0.0" rpy="0 0 0"/>
+    <parent link="FL_hip"/>
+    <child link="FL_thigh"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  
+  <joint name="FL_KNEE" type="revolute">
+    <origin xyz="0 0.088 -0.23" rpy="0 0 0"/>
+    <parent link="FL_thigh"/>
+    <child link="FL_calf"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+</robot>

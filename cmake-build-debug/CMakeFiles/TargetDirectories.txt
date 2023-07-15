@@ -1,0 +1,5 @@
+/home/cha/git/CHA_private/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/cha/git/CHA_private/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/cha/git/CHA_private/cmake-build-debug/examples/CMakeFiles/A1.dir
+/home/cha/git/CHA_private/cmake-build-debug/examples/CMakeFiles/edit_cache.dir
+/home/cha/git/CHA_private/cmake-build-debug/examples/CMakeFiles/rebuild_cache.dir
