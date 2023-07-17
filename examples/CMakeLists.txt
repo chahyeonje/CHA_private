@@ -12,4 +12,4 @@ link_libraries(${EIGEN3_LIBRARIES}
         pthread)
 
 add_executable(A1 src/a1.cpp)
-
+add_executable(Kinova src/kinova.cpp)

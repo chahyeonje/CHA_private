@@ -23,26 +23,26 @@ int main(int argc, char* argv[]) {
     /// create objects
     auto ground = world.addGround();
     ground->setAppearance("steel");
-    auto aliengo = world.addArticulatedSystem(std::string(URDF_RSC_DIR) + "a1/urdf/a1.urdf");
+    auto a1 = world.addArticulatedSystem(std::string(URDF_RSC_DIR) + "a1/urdf/a1.urdf");
 
     /// aliengo joint PD controller
-    Eigen::VectorXd jointNominalConfig(aliengo->getGeneralizedCoordinateDim()), jointVelocityTarget(aliengo->getDOF());
-    jointNominalConfig << 0, 0, 0.54, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8;
+    Eigen::VectorXd jointNominalConfig(a1->getGeneralizedCoordinateDim()), jointVelocityTarget(a1->getDOF());
+    jointNominalConfig << 0, 0, 0.6, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8;
     jointVelocityTarget.setZero();
 
-    Eigen::VectorXd jointPgain(aliengo->getDOF()), jointDgain(aliengo->getDOF());
+    Eigen::VectorXd jointPgain(a1->getDOF()), jointDgain(a1->getDOF());
     jointPgain.tail(12).setConstant(100.0);
     jointDgain.tail(12).setConstant(1.0);
 
-    aliengo->setGeneralizedCoordinate(jointNominalConfig);
-    aliengo->setGeneralizedForce(Eigen::VectorXd::Zero(aliengo->getDOF()));
-    aliengo->setPdGains(jointPgain, jointDgain);
-    aliengo->setPdTarget(jointNominalConfig, jointVelocityTarget);
-    aliengo->setName("aliengo");
+    a1->setGeneralizedCoordinate(jointNominalConfig);
+    a1->setGeneralizedForce(Eigen::VectorXd::Zero(a1->getDOF()));
+    a1->setPdGains(jointPgain, jointDgain);
+    a1->setPdTarget(jointNominalConfig, jointVelocityTarget);
+    a1->setName("a1");
 
     /// launch raisim server
     raisim::RaisimServer server(&world);
-    server.focusOn(aliengo);
+    server.focusOn(a1);
     server.launchServer();
 
     for (int i=0; i<2000000; i++) {
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
         server.integrateWorldThreadSafe();
     }
 
-    std::cout<<"total mass "<<aliengo->getCompositeMass()[0]<<std::endl;
+    std::cout<<"total mass "<<a1->getCompositeMass()[0]<<std::endl;
 
     server.killServer();
 }
